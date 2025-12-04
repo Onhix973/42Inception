@@ -6,8 +6,5 @@ all : build
 build :
 	docker compose -f srcs/docker-compose.yml build
 
-logs :
-	docker compose -f srcs/docker-compose.yml logs nginx
-
 down:
-	docker compose -f srcs/docker-compose.yml down
+	docker compose -f srcs/docker-compose.yml down --remove-orphans
