@@ -1,6 +1,6 @@
 FROM alpine:3.21
 
-RUN apk update && apk upgrade && apk add nginx openssl gettext
+RUN apk update && apk upgrade && apk add --no-cache nginx openssl gettext
 
 COPY nginx.conf.template /etc/nginx/templates/nginx.conf.template
 
