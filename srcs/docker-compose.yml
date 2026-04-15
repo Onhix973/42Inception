@@ -11,10 +11,4 @@ services:
       - ./certs:/etc/nginx/certs:ro
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
-
-  # wordpress:
-  #   container_name: wordpress
-  #   restart: on-failure
-  #   build:
-  #     context: ./requirements/wordpress
     
