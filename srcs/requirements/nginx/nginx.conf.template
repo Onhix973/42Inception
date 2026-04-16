@@ -7,25 +7,28 @@ events {
 }
 
 http {
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-    sendfile on;
-    keepalive_timeout 65;
-    include /etc/nginx/http.d/*.conf;
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	keepalive_timeout 65;
+	include /etc/nginx/http.d/*.conf;
 
 	server {
-	   listen       443 ssl;
-	   server_name  ${DOMAIN_NAME};
+		listen 80;
+		listen [::]:80;
+		listen 443 ssl;
+		listen [::]:443 ssl;
 
-	   ssl_certificate      /etc/nginx/certs/cert.pem;
-	   ssl_certificate_key  /etc/nginx/certs/privkey.pem;
-	   ssl_protocols        TLSv1.2 TLSv1.3;
+		server_name  ${DOMAIN_NAME};
 
-	    root /var/www/html;
-	    index index.html;
+		ssl_certificate      /etc/nginx/certs/cert.pem;
+		ssl_certificate_key  /etc/nginx/certs/privkey.pem;
+		ssl_protocols        TLSv1.2 TLSv1.3;
 
-	   location / {
-	       try_files $uri $uri/ =404;
+		root /var/www/html;
+		index index.html;
+
+		location / {
+	    	try_files $uri $uri/ =404;
 	   }
 	}
 }
