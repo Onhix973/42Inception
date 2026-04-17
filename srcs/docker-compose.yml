@@ -5,10 +5,25 @@ services:
     build:
       context: ./requirements/nginx
     ports:
-      - 8080:80
-      - 8443:443
+      - 443:443
     volumes:
       - ./certs:/etc/nginx/certs:ro
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
-    
+    networks:
+      - Inception
+    expose:
+      - 9000
+  
+  wordpress:
+    container_name: wordpress
+    restart: on-failure
+    build:
+      context: ./requirements/wordpress
+    networks:
+      - Inception
+    expose:
+      - 9000
+      - 3306
+    volumes:
+      - wordpress:/var/wordpress/www
