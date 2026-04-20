@@ -1,3 +1,3 @@
-FROM alpine:3.21
+FROM alpine:3.22
 
-RUN apk update && apk install mariadb
+RUN apk update && apk add mariadb
