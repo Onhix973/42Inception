@@ -1,29 +1,57 @@
 services:
   nginx:
     container_name: nginx
-    restart: on-failure
+    restart: always
+    # depends_on:
+    #   - nginx
+    #   - mariadb
     build:
       context: ./requirements/nginx
     ports:
-      - 443:443
+      - 8443:443
     volumes:
-      - ./certs:/etc/nginx/certs:ro
+      - wordpress:/var/www/html
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
     networks:
-      - Inception
+      - inception
     expose:
       - 9000
-  
+
   wordpress:
     container_name: wordpress
-    restart: on-failure
+    restart: always
+    # depends_on:
+      # - mariadb
     build:
       context: ./requirements/wordpress
     networks:
-      - Inception
+      - inception
     expose:
       - 9000
       - 3306
     volumes:
-      - wordpress:/var/wordpress/www
+      - wordpress:/var/www/html
+
+  mariadb:
+    container_name: mariadb
+    restart: always
+    build:
+      context: ./requirements/mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - inception
+    expose:
+      - 3306
+    
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  wordpress:
+  mariadb:

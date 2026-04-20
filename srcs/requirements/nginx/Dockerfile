@@ -1,7 +1,14 @@
-FROM alpine:3.21
+FROM alpine:3.22
 
-RUN apk update && apk upgrade && apk add --no-cache nginx openssl gettext
+RUN apk update && apk upgrade && apk add --no-cache nginx openssl
 
-COPY nginx.conf.template /etc/nginx/templates/nginx.conf.template
+RUN mkdir -p /etc/nginx/certs
+RUN openssl req -x509 -nodes -days 365 \
+	-newkey rsa:2048 -keyout /etc/nginx/certs/privkey.pem \
+	-out /etc/nginx/certs/cert.pem -subj "/C=FR/ST=State/L=Lyon/O=42Lyon/CN=tlutz.42.fr"
 
-CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
+COPY nginx.conf /etc/nginx/templates/nginx.conf
+
+EXPOSE 443
+
+CMD ["/bin/sh", "-c", "nginx -g 'daemon off;'"]
