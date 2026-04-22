@@ -1,13 +1,31 @@
 #!/bin/sh
 
-wget https://wordpress.org/latest.tar.gz
-tar -xzvf latest.tar.gz
-cp -r wordpress/* /var/www/html
-rm -rf latest.tar.gz
-rm -rf wordpress
+set -e
 
-sed -i -e "s/MYSQL_NAME_PH/$(cat /run/secrets/mysql_name)/g" /var/www/html/wp-config.php
-sed -i -e "s/MYSQL_USER_PH/$(cat /run/secrets/mysql_user)/g"  /var/www/html/wp-config.php
-sed -i -e "s/MYSQL_PASSWORD_PH/$(cat /run/secrets/mysql_password)/g" /var/www/html/wp-config.php
+if [ ! -d wp-content ]; then
+	sed -i 's/memory_limit = 128M/memory_limit = 256M/' /etc/php83/php.ini
+	wp core download --path="/var/www/html" --allow-root
+fi
 
-exec php-fpm83 -F -R
+if [ ! -f wp-config.php ]; then 
+	wp config create \
+		--dbname="inception" \
+		--dbuser="tlutz" \
+		--dbpass="bayle" \
+		--dbhost="mariadb" \
+		--path="/var/www/html" \
+		--allow-root
+fi
+
+if [ ! wp core is-installed --allow-root ]; then
+	wp core install \
+		--url=tlutz.42.fr \
+		--title="Inception Blog" \
+		--admin_user="Elrond" \
+		--admin_password="fondcombe" \
+		--admin_email="elrond@example.com" \
+		--skip_email \
+		--allow-root
+fi
+
+exec php-fpm83 -F
