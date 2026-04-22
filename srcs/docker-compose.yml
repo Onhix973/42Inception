@@ -1,6 +1,7 @@
 services:
   nginx:
     container_name: nginx
+    image: nginx
     restart: always
     depends_on:
       - wordpress
@@ -16,13 +17,12 @@ services:
 
   wordpress:
     container_name: wordpress
+    image: wordpress
     restart: always
     depends_on:
       - mariadb
     build:
       context: ./requirements/wordpress
-    networks:
-      - inception
     volumes:
       - wordpress:/var/www/html
     secrets:
@@ -30,21 +30,24 @@ services:
       - mysql_user
       - mysql_password
       - mysql_root_password
+    networks:
+      - inception
 
   mariadb:
     container_name: mariadb
+    image: mariadb
     restart: always
     build:
       context: ./requirements/mariadb
     volumes:
       - mariadb:/var/lib/mysql
-    networks:
-      - inception
     secrets:
       - mysql_name
       - mysql_user
       - mysql_password
       - mysql_root_password
+    networks:
+      - inception
     
 
 networks:
