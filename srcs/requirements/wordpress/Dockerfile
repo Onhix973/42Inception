@@ -17,3 +17,5 @@ COPY --chmod=+x entrypoint/setup_wordpress.sh /usr/bin/setup_wordpress.sh
 WORKDIR /var/www/html
 
 ENTRYPOINT ["/usr/bin/setup_wordpress.sh"]
+
+CMD exec php-fpm83 -F --force-stderr

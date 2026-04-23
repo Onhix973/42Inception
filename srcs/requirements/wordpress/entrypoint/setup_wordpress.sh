@@ -14,23 +14,21 @@ done
 
 if [ ! -f wp-config.php ]; then 
 	wp config create \
-		--dbname="inception" \
-		--dbuser="tlutz" \
-		--dbpass="bayle" \
+		--dbname="$(cat /run/secrets/mysql_name)" \
+		--dbuser="$(cat /run/secrets/mysql_user)" \
+		--dbpass="$(cat /run/secrets/mysql_password)" \
 		--dbhost="mariadb:3306" \
 		--path="/var/www/html" \
 		--allow-root
 fi
 
-# if [ ! wp core is-installed --allow-root ]; then
-	wp core install \
-		--url=tlutz.42.fr \
-		--title="Inception Blog" \
-		--admin_user="Elrond" \
-		--admin_password="fondcombe" \
-		--admin_email="elrond@example.com" \
-		--skip-email \
-		--allow-root
-# fi
+wp core install \
+	--url=tlutz.42.fr \
+	--title="Inception Blog" \
+	--admin_user="Elrond" \
+	--admin_password="fondcombe" \
+	--admin_email="elrond@example.com" \
+	--skip-email \
+	--allow-root
 
-exec php-fpm83 -F --force-stderr
+exec "$@"
