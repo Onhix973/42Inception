@@ -28,6 +28,8 @@ services:
       - mysql_password
       - wp_admin
       - wp_admin_password
+      - wp_user
+      - wp_user_password
     networks:
       - inception
 
