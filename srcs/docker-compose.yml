@@ -26,7 +26,8 @@ services:
       - mysql_name
       - mysql_user
       - mysql_password
-      - mysql_root_password
+      - wp_admin
+      - wp_admin_password
     networks:
       - inception
 
@@ -42,7 +43,6 @@ services:
       - mysql_name
       - mysql_user
       - mysql_password
-      - mysql_root_password
     networks:
       - inception
     
@@ -66,11 +66,17 @@ volumes:
       device: /home/tlutz/data/mariadb
 
 secrets:
-  mysql_root_password:
-    file: ./secrets/mysql_root_password
   mysql_name:
     file: ./secrets/mysql_name
   mysql_user:
     file: ./secrets/mysql_user
   mysql_password:
     file: ./secrets/mysql_password
+  wp_admin:
+    file: ./secrets/wp_admin
+  wp_admin_password:
+    file: ./secrets/wp_admin_password
+  wp_user:
+    file: ./secrets/wp_user
+  wp_user_password:
+    file: ./secrets/wp_user_password
