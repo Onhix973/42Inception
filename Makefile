@@ -11,5 +11,6 @@ fclean: down
 	docker system prune -a --volumes -f
 	docker volume rm inception_mariadb_data
 	docker volume rm inception_wordpress_data
+	rm -rf /home/tlutz/data
 
 re: fclean all
