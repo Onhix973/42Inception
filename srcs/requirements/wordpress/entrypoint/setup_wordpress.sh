@@ -22,7 +22,7 @@ if [ ! -f wp-config.php ]; then
 		--allow-root
 
 	wp core install \
-		--url=tlutz.42.fr \
+		--url=https://tlutz.42.fr \
 		--title="Inception" \
 		--admin_user="$(cat /run/secrets/wp_admin)" \
 		--admin_password="$(cat /run/secrets/wp_admin_password)" \
