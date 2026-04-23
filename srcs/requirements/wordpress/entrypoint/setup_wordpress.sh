@@ -29,12 +29,12 @@ if [ ! -f wp-config.php ]; then
 		--admin_email="admin@example.com" \
 		--skip-email \
 		--allow-root \
-		--path=/var/www/html
+		--path="/var/www/html"
 
-	wp user create $(cat /run/secrets/wp_user) user@example.com\
+	wp user create "$(cat /run/secrets/wp_user)" "user@example.com"\
 		--role=author \
-		--user_pass=$(cat /run/secrets/wp_user_password) \
-		--path=/var/www/html
+		--user_pass="$(cat /run/secrets/wp_user_password)" \
+		--path="/var/www/html"
 
 fi
 
