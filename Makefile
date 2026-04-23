@@ -2,6 +2,8 @@ all : build
 	docker compose -f srcs/docker-compose.yml -p inception up -d
 
 build :
+	mkdir -p /home/tlutz/data/wordpress
+	mkdir -p /home/tlutz/data/mariadb
 	docker compose -f srcs/docker-compose.yml -p inception build
 
 down:
