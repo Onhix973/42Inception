@@ -20,15 +20,21 @@ if [ ! -f wp-config.php ]; then
 		--dbhost="mariadb:3306" \
 		--path="/var/www/html" \
 		--allow-root
-fi
 
-wp core install \
-	--url=tlutz.42.fr \
-	--title="Inception Blog" \
-	--admin_user="Elrond" \
-	--admin_password="fondcombe" \
-	--admin_email="elrond@example.com" \
-	--skip-email \
-	--allow-root
+	wp core install \
+		--url=tlutz.42.fr \
+		--title="Inception" \
+		--admin_user="$(cat /run/secrets/wp_admin)" \
+		--admin_password="$(cat /run/secrets/wp_admin_password)" \
+		--admin_email="admin@example.com" \
+		--skip-email \
+		--allow-root
+
+	wp user create $(cat /run/secrets/wp_user) user@example.com\
+		--role=author \
+		--user_pass=$(cat /run/secrets/wp_user_password) \
+		--path=/var/www/
+
+fi
 
 exec "$@"
