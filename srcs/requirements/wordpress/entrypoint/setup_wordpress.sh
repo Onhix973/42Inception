@@ -7,7 +7,7 @@ if [ ! -d wp-content ]; then
 	wp core download --path="/var/www/html" --allow-root
 fi
 
-until mariadb -h mariadb -P 3306 -u tlutz -pbayle -e "SELECT 1" >/dev/null 2>&1; do
+until mariadb -h mariadb -P 3306 -u "$(cat /run/secrets/mysql_user)" -p"$(cat /run/secrets/mysql_password)" -e "SELECT 1" >/dev/null 2>&1; do
   echo "Waiting for MariaDB..."
   sleep 2
 done
@@ -28,7 +28,8 @@ if [ ! -f wp-config.php ]; then
 		--admin_password="$(cat /run/secrets/wp_admin_password)" \
 		--admin_email="admin@example.com" \
 		--skip-email \
-		--allow-root
+		--allow-root \
+		--path=/var/www/html
 
 	wp user create $(cat /run/secrets/wp_user) user@example.com\
 		--role=author \
