@@ -33,7 +33,7 @@ if [ ! -f wp-config.php ]; then
 	wp user create $(cat /run/secrets/wp_user) user@example.com\
 		--role=author \
 		--user_pass=$(cat /run/secrets/wp_user_password) \
-		--path=/var/www/
+		--path=/var/www/html
 
 fi
 
