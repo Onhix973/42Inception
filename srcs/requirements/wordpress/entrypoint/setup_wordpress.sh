@@ -34,8 +34,6 @@ if [ ! -f wp-config.php ]; then
 		--role=author \
 		--user_pass=$(cat /run/secrets/wp_user_password) \
 		--path=/var/www/
-	
-	wp plugin delete akismet hello --path=/var/www/
 
 fi
 
