@@ -2,10 +2,9 @@ services:
   nginx:
     container_name: nginx
     image: nginx
-    restart: always
+    restart: on-failure
     depends_on:
       - wordpress
-      - mariadb
     build:
       context: ./requirements/nginx
     ports:
@@ -16,13 +15,13 @@ services:
   wordpress:
     container_name: wordpress
     image: wordpress
-    restart: always
+    restart: on-failure
     depends_on:
       - mariadb
     build:
       context: ./requirements/wordpress
     volumes:
-      - wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     secrets:
       - mysql_name
       - mysql_user
@@ -34,11 +33,11 @@ services:
   mariadb:
     container_name: mariadb
     image: mariadb
-    restart: always
+    restart: on-failure
     build:
       context: ./requirements/mariadb
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     secrets:
       - mysql_name
       - mysql_user
@@ -53,8 +52,18 @@ networks:
     driver: bridge
 
 volumes:
-  wordpress:
-  mariadb:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tlutz/data/wordpress
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tlutz/data/mariadb
 
 secrets:
   mysql_root_password:
