@@ -10,9 +10,11 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     ports:
-      - 443:443
+      - 8443:443
     networks:
       - inception
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
 
   wordpress:
     container_name: wordpress
@@ -34,6 +36,9 @@ services:
       - wp_user_password
     networks:
       - inception
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - SITE_TITLE=${SITE_TITLE}
 
   mariadb:
     container_name: mariadb
