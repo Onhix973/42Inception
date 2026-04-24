@@ -14,4 +14,3 @@ EXPOSE 3306
 ENTRYPOINT [ "/init_db.sh" ]
 
 CMD mariadbd --datadir=/var/lib/mysql --init-file=/init.sql --bind-address=0.0.0.0 --user=mysql --socket=/tmp/mysql.sock
- 
