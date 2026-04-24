@@ -36,8 +36,6 @@ if [ ! -f wp-config.php ]; then
 		--user_pass="$(cat /run/secrets/wp_user_password)" \
 		--path="/var/www/html"
 
-	wp plugin delete akismet hello --path="/var/www/html"
-
 fi
 
 exec "$@"
