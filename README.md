@@ -10,7 +10,7 @@ Inception is a school project that aims to introduce Docker. The student needs t
 
 A docker bridge network is used for this project.
 
-The nginx container is available through port 443 on the host machine. It connects to the Wordpress container through port 9000 inside of the docker network.
+The nginx container is available through port 443 on the host machine. It connects to the Wordpress container through port 9000 inside the docker network.
 The wordpress container connects to the Mariadb through port 3306 inside the docker network.
 
 Mariadb and Wordpress have their own named volumes to store persistent data. The volumes content is stored in "/home/${USER}/data" on the host machine.
@@ -43,6 +43,9 @@ https://nginx.org/en/docs/
 
 Mariadb's documentation, in this project mariadb just needs to be installed and launched, the official documentation gives everything for that
 https://mariadb.com/docs
+
+Wordpress documentation, to know how to install and set it up
+https://wordpress.org/documentation/
 
 # Project Description
 
