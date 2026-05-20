@@ -62,12 +62,14 @@ networks:
 
 volumes:
   wordpress_data:
+    name: wordpress_data
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/tlutz/data/wordpress
   mariadb_data:
+    name: mariadb_data
     driver: local
     driver_opts:
       type: none
@@ -76,16 +78,16 @@ volumes:
 
 secrets:
   mysql_name:
-    file: ./secrets/mysql_name
+    file: ../secrets/mysql_name
   mysql_user:
-    file: ./secrets/mysql_user
+    file: ../secrets/mysql_user
   mysql_password:
-    file: ./secrets/mysql_password
+    file: ../secrets/mysql_password
   wp_admin:
-    file: ./secrets/wp_admin
+    file: ../secrets/wp_admin
   wp_admin_password:
-    file: ./secrets/wp_admin_password
+    file: ../secrets/wp_admin_password
   wp_user:
-    file: ./secrets/wp_user
+    file: ../secrets/wp_user
   wp_user_password:
-    file: ./secrets/wp_user_password
+    file: ../secrets/wp_user_password

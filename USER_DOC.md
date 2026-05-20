@@ -8,29 +8,36 @@
 
 ## Start and stop the project
 
-First step is to create a .env file next to the docker-compose.yml file, with DOMAIN_NAME and SITE_TITLE set up. 
-A .env.example is available with example values.
+Before starting the stack, create a `.env` file next to `docker-compose.yml` and define `DOMAIN_NAME` and `SITE_TITLE`.
+An `.env.example` file is provided as a template.
 
-Next step is to create different secret files next to the docker-compose.yml file:
+Then create different secret files in a folder called "secrets" at the root of the project.
 
-- A file named "mysql_user" containing the name of the user in the database
-- A file named "mysql_password" containing the password of the user in the database
-- A file named "mysql_name" containing the name of the database
-- A file named "wp_admin" containing the name of the administrator in wordpress
-- A file named "wp_admin_password" containing the password of the wordpress administrator
-- A file named "wp_user" containing the name of the simple wordpress user
-- A file named "wp_password" containing the password of the simple wordpress user
+Required files:
+- `mysql_user` containing the name of the user in the database
+- `mysql_password` containing the password of the user in the database
+- `mysql_name` containing the name of the database
+- `wp_admin` containing the name of the administrator in wordpress
+- `wp_admin_password` containing the password of the wordpress administrator
+- `wp_user` containing the name of the simple wordpress user
+- `wp_password` containing the password of the simple wordpress user
 
-Finally, the "make" command build every container with each services, using the crendentials and variables that we just set
+These files are used as Docker secrets and are mounted inside containers under `/run/secrets/<secret_name>`
+
+Finally, the `make` command build every container with each services, using the credentials and variables that we just set.
+
+To stop the project, the `make down` command stops the containers, and the `make fclean` command stops and cleans everything.
 
 ## Access the website and the admin panel
 
 Edit the /etc/hosts file and add this line:
-- 127.0.0.1  user.42.fr
 
-Then the website is accessible with https://user.42.fr in any browser
+`127.0.0.1  tlutz.42.fr`
 
-(where 'user' is your username on the machine)
+Then the website is accessible with https://tlutz.42.fr in any browser
+
+To access the admin panel of the website, you need to go to https://tlutz.42.fr/wp-login.php, then login with your user or the admin user.
+You can then access the admin panel at https://tlutz.42.fr/wp-admin.
 
 ## Check that the services are running correctly
 
